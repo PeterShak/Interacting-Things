@@ -19,6 +19,15 @@ function draw() {
   background(z,x,c)
   updateBall(ball);
   updateBall(ball2)
+  if (dist(ball.x, ball.y, ball2.x, ball2.y) < 0.5*ball.r + 0.5*ball2.r) {
+    correct()
+}
+  
+function correct() {
+  ball.dx *=  -1
+  ball.dy *=  -1
+  ball2.dx *=  -1
+  ball2.dy *=  -1
 }
 
 function updateBall(b) {
@@ -41,12 +50,9 @@ function updateBall(b) {
   if (b.y < 0 || b.y > height) {
     b.dy = b.dy * -1
   }
+  }
 }
 function setRandomPosition(b, xMin = 0, yMin = 0, xMax = width, yMax = height) {
-  /*if (dist(ball.x, ball.y, ball2.x, ball2.y) < 0.5*ball.r + 0.5*ball2.r) {
-    ball.dx = balla.dx * -1
-    ball.dy = balla.dy * -1
-  */
   b.x = random(xMin, xMax)
   b.y = random(yMin, yMax) 
 }
@@ -60,7 +66,7 @@ function createBall() {
   let newBall = {}
   setRandomPosition(newBall)
   setRandomVelocity(newBall)
-  newBall.r = random(10,20)
+  newBall.r = random(60,80)
   fill(random(255),random(255),random(255))
   return newBall
 }
