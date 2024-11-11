@@ -12,11 +12,13 @@ function setup() {
   x = random (255)
   c = random (255)
   ball = createBall();
+  ball2 = createBall()
 }
 
 function draw() {
   background(z,x,c)
   updateBall(ball);
+  updateBall(ball2)
 }
 
 function updateBall(b) {
