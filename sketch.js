@@ -1,92 +1,66 @@
-let ax, ay, ar, adx, ady
-let bx, by, br, bdx, bdy
+let ball = {} //ax, ay, ar, adx, ady
+let ball2 = {}
+//let ballb = {} //bx, by, br, bdx, bdy
+let z
+let x
+let c
 
 
 function setup() {
   createCanvas(400, 400);
-  speedACircle();
-  speedBCircle();
+  z = random (255)
+  x = random (255)
+  c = random (255)
+  ball = createBall();
 }
 
 function draw() {
-  background(220);
-  posACircle();
-  posBCircle();
-  createACircle();
-  createBCircle();
-  
-   if(ax-0.5*ar <= 0 || ax+0.5*ar >= width) {
-    adx *= -1
-  }
-  if(ay-0.5*ar <= 0 || ay+0.5*ar >= height) {
-    ady *= -1
-  }
-  
-  if(bx-0.5*br <= 0 || bx+0.5*br >= width) {
-    bdx *= -1
-  }
-  if(by-0.5*ar <= 0 || by+0.5*br >= height) {
-    bdy *= -1
-  }
-  
-  if (ax < 0 || ax > width) {
-    adx = adx * -1
-  }
-  
-  if (ay < 0 || ay > height) {
-    ady = ady * -1
-  }
-  
-    if (bx < 0 || bx > width) {
-    bdx = bdx * -1
-  }
-  
-  if (by < 0 || by > height) {
-    bdy = bdy * -1
-  }
-  
-  if (dist(ax, ay, bx, by) < 0.5*ar + 0.5*br) {
-    adx = adx * -1
-    ady = ady * -1
-    bdx = bdx * -1
-    bdy = bdy * -1 
-  }
+  background(z,x,c)
+  updateBall(ball);
 }
 
-function speedACircle() {
-  ax = random(width);
-  ay = random(height);
-  ar = random(20,30);
-  adx = random(-5,5);
-  ady = random(-5,5);
+function updateBall(b) {
+  circle(b.x, b.y, b.r);
+  b.x += b.dx
+  b.y += b.dy
+  
+  if(b.x-0.5*b.r <= 0 || b.x+0.5*b.r >= width) {
+    b.dx *= -1
+  }
+  
+  if(b.y-0.5*b.r <= 0 || b.y+0.5*b.r >= height) {
+    b.dy *= -1
+  }
+  
+  if (b.x < 0 || b.x > width) {
+    b.dx = b.dx * -1
+  }
+  
+  if (b.y < 0 || b.y > height) {
+    b.dy = b.dy * -1
+  }
+}
+function setRandomPosition(b, xMin = 0, yMin = 0, xMax = width, yMax = height) {
+  /*if (dist(ball.x, ball.y, ball2.x, ball2.y) < 0.5*ball.r + 0.5*ball2.r) {
+    ball.dx = balla.dx * -1
+    ball.dy = balla.dy * -1
+  */
+  b.x = random(xMin, xMax)
+  b.y = random(yMin, yMax) 
 }
 
-function posACircle() {
-  ax = ax + adx;
-  ay = ay + ady;
+function setRandomVelocity(b) {
+  b.dx = random(-5,5);
+  b.dy = random(-5,5);
 }
 
-function createACircle() {
-  fill('maroon');
-  circle(ax, ay, ar);
-}
-
-function createBCircle() {
-  fill('orange')
-  circle(bx, by, br);
-}
-
-function posBCircle() {
-  bx = bx + bdx;
-  by = by + bdy;
-}
-
-function speedBCircle() {
-  bx = random(width);
-  by = random(height);
-  br = random(20,30);
-  bdx = random(-5,5);
-  bdy = random(-5,5);
+function createBall() {
+  let newBall = {}
+  setRandomPosition(newBall)
+  setRandomVelocity(newBall)
+  newBall.r = random(10,20)
+  fill(random(255),random(255),random(255))
+  return newBall
 }
 
 
@@ -98,6 +72,5 @@ function keyPressed() {
 }
 
 function reset(){
-  speedACircle();
-  speedBCircle();
+  createBall()
 }
